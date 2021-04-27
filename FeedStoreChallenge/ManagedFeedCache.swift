@@ -14,7 +14,8 @@ public class ManagedFeedCache: NSManagedObject {
 	@NSManaged var feed: NSOrderedSet
 
 	@discardableResult
-	static func insertNewInstance(with timestamp: Date, feed: NSOrderedSet, in context: NSManagedObjectContext) -> ManagedFeedCache {
+	static func insertNewUniqueInstance(with timestamp: Date, feed: NSOrderedSet, in context: NSManagedObjectContext) throws -> ManagedFeedCache {
+		try find(in: context).map(context.delete)
 		let feedCache = ManagedFeedCache(context: context)
 		feedCache.timestamp = timestamp
 		feedCache.feed = feed

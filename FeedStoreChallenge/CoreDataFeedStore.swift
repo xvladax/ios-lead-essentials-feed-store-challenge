@@ -47,7 +47,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = context
 		context.perform {
 			let managedFeed = ManagedFeedImage.feedImages(from: feed, in: context)
-			ManagedFeedCache.insertNewInstance(with: timestamp, feed: managedFeed, in: context)
+			try! ManagedFeedCache.insertNewUniqueInstance(with: timestamp, feed: managedFeed, in: context)
 			try! context.save()
 			completion(nil)
 		}
