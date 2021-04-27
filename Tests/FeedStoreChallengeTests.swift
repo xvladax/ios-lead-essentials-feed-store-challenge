@@ -88,18 +88,18 @@ class FeedStoreChallengeTests: XCTestCase, FailableFeedStoreSpecs {
 	}
 
 	func test_insert_hasNoSideEffectsOnInsertionError() throws {
-//		let stub = NSManagedObjectContext.alwaysFailingSaveStub()
-//		stub.startIntercepting()
-//
-//		let sut = try makeSUT()
-//
-//		assertThatInsertHasNoSideEffectsOnInsertionError(on: sut)
+		let stub = NSManagedObjectContext.alwaysFailingSaveStub()
+		stub.startIntercepting()
+
+		let sut = try makeSUT()
+
+		assertThatInsertHasNoSideEffectsOnInsertionError(on: sut)
 	}
 
 	func test_delete_deliversNoErrorOnEmptyCache() throws {
-//		let sut = try makeSUT()
-//
-//		assertThatDeleteDeliversNoErrorOnEmptyCache(on: sut)
+		let sut = try makeSUT()
+
+		assertThatDeleteDeliversNoErrorOnEmptyCache(on: sut)
 	}
 
 	func test_delete_hasNoSideEffectsOnEmptyCache() throws {
