@@ -12,4 +12,26 @@ import CoreData
 public class ManagedFeedCache: NSManagedObject {
 	@NSManaged var timestamp: Date
 	@NSManaged var feed: NSOrderedSet
+
+	@discardableResult
+	static func insertNewInstance(with timestamp: Date, feed: NSOrderedSet, in context: NSManagedObjectContext) -> ManagedFeedCache {
+		let feedCache = ManagedFeedCache(context: context)
+		feedCache.timestamp = timestamp
+		feedCache.feed = feed
+
+		return feedCache
+	}
+
+	static func find(in context: NSManagedObjectContext) throws -> ManagedFeedCache? {
+		let fetchRequest = NSFetchRequest<ManagedFeedCache>.init(entityName: entity().name!)
+		fetchRequest.fetchLimit = 1
+		fetchRequest.returnsObjectsAsFaults = false
+		let cache = try context.fetch(fetchRequest).first
+
+		return cache
+	}
+
+	var localFeed: [LocalFeedImage] {
+		return feed.compactMap { ($0 as? ManagedFeedImage)?.localFeedImage }
+	}
 }
