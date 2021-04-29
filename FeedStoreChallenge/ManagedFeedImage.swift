@@ -9,18 +9,18 @@
 import CoreData
 
 @objc(ManagedFeedImage)
-public class ManagedFeedImage: NSManagedObject {
+final class ManagedFeedImage: NSManagedObject {
 	@NSManaged var id: UUID
 	@NSManaged var imageDescription: String?
 	@NSManaged var location: String?
 	@NSManaged var url: URL
 	@NSManaged var cache: ManagedFeedCache
 
-	static func feedImages(from localFeedImges: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
-		return NSOrderedSet(array: localFeedImges.map({ feedImage(from: $0, in: context) }))
+	static func feedImages(from localFeedImages: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
+		return NSOrderedSet(array: localFeedImages.map({ feedImage(from: $0, in: context) }))
 	}
 
-	static func feedImage(from localFeedImage: LocalFeedImage, in context: NSManagedObjectContext) -> ManagedFeedImage {
+	private static func feedImage(from localFeedImage: LocalFeedImage, in context: NSManagedObjectContext) -> ManagedFeedImage {
 		let feedImage = ManagedFeedImage(context: context)
 		feedImage.id = localFeedImage.id
 		feedImage.imageDescription = localFeedImage.description
